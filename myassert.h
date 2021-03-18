@@ -26,7 +26,9 @@
 // https://opensource.apple.com/source/Libc/Libc-1439.40.11/gen/FreeBSD/assert.c.auto.html
 void myassert_rtn(const char *, const char *, int, const char *) __dead2 __cold __disable_tail_calls;
 
-#define myassert(e) \
-    (__builtin_expect(!(e), 0) ? myassert_rtn(__func__, __FILE__, __LINE__, #e) : (void)0)
+// e !e  b
+// 0  1  myassert_rtn()
+// N  0  (void)0
+#define myassert(e) (__builtin_expect(!(e), 0) ? myassert_rtn(__func__, __FILE__, __LINE__, #e) : (void)0)
 
 #endif /* MYASSERT_H */
