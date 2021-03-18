@@ -19,6 +19,7 @@
 void critical_part(){
   // ALL_CFLAGS+=-E
   //   (__builtin_expect(!(0), 0) ? __assert_rtn(__func__, "main.c", 5, "0") : (void)0);
+  // asm("nop");
   myassert(0);
 }
 
@@ -26,11 +27,21 @@ void execute(){
   critical_part();
 }
 
-void wrapper(){
+void lowlevel(){
   execute();
 }
 
+void highlevel(){
+  lowlevel();
+}
+
+void wrapper(){
+  highlevel();
+}
+
 int main(){
+
   wrapper();
   return 0;
+
 }
